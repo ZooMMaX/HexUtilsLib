@@ -1,5 +1,7 @@
 # HexUtilsLib
 
+![Maven Central](https://img.shields.io/maven-central/v/ru.zoommax/HexUtilsLib?color=00ff)
+
 ### convert byte[] to hex
 
 ```java
