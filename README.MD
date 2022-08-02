@@ -14,7 +14,9 @@ public class Main {
     }
 }
 ```
-
+```shell
+output: 01020304
+```
 ---
 
 ### convert hex to byte[]
@@ -28,4 +30,7 @@ public class Main {
         byte[] b = HexUtils.fromString(hex);
     }
 }
+```
+```shell
+output: 0xAB, 0xCD, 0xEF, 0x29.
 ```

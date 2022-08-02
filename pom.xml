@@ -6,7 +6,7 @@
 
     <groupId>ru.zoommax</groupId>
     <artifactId>HexUtilsLib</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <name>Hex utils library</name>
     <description>Convert byte array to hex and hex to byte array</description>
     <url>https://github.com/ZooMMaX/HexUtilsLib</url>
