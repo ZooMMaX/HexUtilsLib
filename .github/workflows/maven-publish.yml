@@ -10,6 +10,8 @@ jobs:
   MavenCentral:
     runs-on: ubuntu-latest
     steps:
+      - name: StartGPG
+        run: gpg -k
       - uses: actions/checkout@v3
       - name: Set up Maven java
         uses: actions/setup-java@v3
