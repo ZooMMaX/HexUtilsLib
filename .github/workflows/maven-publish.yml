@@ -10,35 +10,24 @@ jobs:
   MavenCentral:
     runs-on: ubuntu-latest
     steps:
-      - name: StartGPG
-        run: gpg -k
       - uses: actions/checkout@v3
-      - name: Set up Maven java
-        uses: actions/setup-java@v3
-        with:
-          java-version: '8'
-          distribution: 'temurin'
+      
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Set up Apache Maven Central
+        uses: actions/setup-java@v1
+        with: # running setup-java again overwrites the settings.xml
+          java-version: 8
           server-id: ossrh
           server-username: OSSRH_USERNAME
           server-password: OSSRH_PASSWORD
-          gpg-keyname: GPG_KEYNAME
-          gpg-passphrase: GPG_PASSPHRASE
-        
-      - name: Recovery GPG
-        run: gpg --keyserver keyserver.ubuntu.com --recv-keys  && gpg -k
-          
-      - name: Update .m2 settings.xml
-        #env:
-          #OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          #OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          #GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
-          #GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
-        run:  echo "<settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd\"><servers><server><id>ossrh</id><username>${OSSRH_USERNAME}</username><password>${OSSRH_PASSWORD}</password></server></servers><profiles><profile><id>ossrh</id><activation><activeByDefault>true</activeByDefault></activation><properties><gpg.keyname>${GPG_KEYNAME}</gpg.keyname><gpg.passphrase>${GPG_PASSWORD}</gpg.passphrase></properties></profile></profiles></settings>" > $HOME/.m2/settings.xml
+          gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
 
-      - name: Publish package
-        run: mvn clean deploy -Prelease -Possrh -DprofileIdEnabled=true
+      - name: Publish to Apache Maven Central
+        run: mvn -Prelease deploy
         env:
           OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
-          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
