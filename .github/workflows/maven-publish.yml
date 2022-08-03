@@ -17,12 +17,13 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
           
+      - name: Start GPG
+        run: gpg --list-keys
+        
       - name: Recovery GPG
         env:
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
-        run: |
-          gpg --list-keys
-          gpg --keyserver keyserver.ubuntu.com --recv-keys ${GPG_KEYNAME} && gpg --list-keys
+        run: gpg --keyserver keyserver.ubuntu.com --recv-keys ${GPG_KEYNAME} && gpg --list-keys
           
       - name: Update .m2 settings.xml
         env:
