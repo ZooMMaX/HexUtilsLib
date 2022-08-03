@@ -20,7 +20,7 @@ jobs:
       - name: Recovery GPG
         env:
           GPG_KEYNAME: ${{ secrets.GPG_KEYNAME }}
-        run: gpg --keyserver keyserver.ubuntu.com --recv-keys ${GPG_KEYNAME}
+        run: gpg --keyserver keyserver.ubuntu.com --recv-keys ${GPG_KEYNAME} && gpg --list-keys
           
       - name: Update .m2 settings.xml
         env:
