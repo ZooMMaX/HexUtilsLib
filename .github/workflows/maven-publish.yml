@@ -2,9 +2,7 @@ name: Maven Package
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches: [ "release" ]
     
 jobs:
   MavenCentral:
