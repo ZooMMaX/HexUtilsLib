@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
         
       - name: Recovery GPG
-        run: echo "key name - ${{ secrets.GPG_KEYNAME }}" && gpg --keyserver keyserver.ubuntu.com --recv-keys ${{ secrets.GPG_KEYNAME }} && gpg -k
+        run: echo "key name - ${{ secrets.GPG_KEYNAME }}" && gpg --keyserver keyserver.ubuntu.com --recv-keys EF1819744B0435093CDA29001B7D446AB5FD1A6D && gpg -k
           
       - name: Update .m2 settings.xml
         env:
