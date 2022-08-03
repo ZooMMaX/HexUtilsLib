@@ -31,4 +31,4 @@ jobs:
         run:  echo "<settings xmlns=\"http://maven.apache.org/SETTINGS/1.0.0\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd\"><servers><server><id>ossrh</id><username>${OSSRH_USERNAME}</username><password>${OSSRH_PASSWORD}</password></server></servers><profiles><profile><id>ossrh</id><activation><activeByDefault>true</activeByDefault></activation><properties><gpg.keyname>${GPG_KEYNAME}</gpg.keyname><gpg.passphrase>${GPG_PASSWORD}</gpg.passphrase></properties></profile></profiles></settings>" > $HOME/.m2/settings.xml
 
       - name: Publish package
-        run: mvn clean deploy -Prelease -DprofileIdEnabled=true
+        run: mvn --batch-mode verify gpg:sign -Dgpg.passphrase=$GPG_PASSWORD #mvn clean deploy -Prelease -DprofileIdEnabled=true
